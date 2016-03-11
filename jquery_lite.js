@@ -1,16 +1,38 @@
 (function (root) {
+  var _callbacks = [];
+  var _docReady = false;
+
+  document.addEventListener('DOMContentLoaded', function () {
+    _docReady = true;
+    _callbacks.forEach(function (fn) {
+      fn();
+    });
+  });
+
+  var registerCallback = function (fn) {
+    if (!_docReady) {
+      _callbacks.push(fn);
+    }
+    else {
+      fn();
+    }
+  };
+
   var DOMNodeCollection = function (elements) {
     this.elements = elements;
   };
 
-  var $l = root.$l = function (element) {
+  var $l = root.$l = function (arg) {
     var elements;
 
-    if (element instanceof HTMLElement) {
-      elements = [element];
+    if (typeof arg === "function") {
+      registerCallback(arg);
+    }
+    else if (arg instanceof HTMLElement) {
+      elements = [arg];
     }
     else {
-      var nodeList = document.querySelectorAll(element);
+      var nodeList = document.querySelectorAll(arg);
       elements = Array.prototype.slice.call(nodeList);
     }
 
@@ -131,6 +153,6 @@
     });
   };
 
-  
+
 
 })(this);
