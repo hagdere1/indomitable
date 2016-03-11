@@ -77,15 +77,15 @@
       error: function () {},
       data: {}
     };
-    options = $l.extend(options, defaults);
+    options = $l.extend(defaults, options);
 
     if (options.method.toUpperCase() === "GET") {
       options.url += "?" + generateQueryString(options.data);
     }
 
     request.open(options.method, options.url, true);
-    request.onload = function (e) {
-      if (request.status == 200) {
+    request.onreadystatechange = function() {
+      if (request.readyState == 4 && request.status == 200) {
         options.success(request.response);
       }
       else {
@@ -93,7 +93,9 @@
       }
     };
 
+    console.log(options);
     request.send(JSON.stringify(options.data));
+
   };
 
   // Document manipulation and traversal
