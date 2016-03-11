@@ -39,7 +39,7 @@
     return new DOMNodeCollection(elements);
   };
 
-  // Merge JS objects
+  // Ajax requests
 
   $l.extend = function (base) {
     var otherObjects = Array.prototype.slice.call(arguments, 1);
@@ -53,6 +53,47 @@
     });
 
     return base;
+  };
+
+  var generateQueryString = function (object) {
+    var queryString = "";
+
+    for (var prop in object) {
+      if (object.hasOwnProperty(prop)) {
+        queryString += prop + "=" + object[prop] + "&";
+      }
+    }
+
+    return queryString.substring(0, queryString.length - 1);
+  };
+
+  $l.ajax = function (options) {
+    var request = new XMLHttpRequest();
+    var defaults = {
+      method: "GET",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      url: "",
+      success: function () {},
+      error: function () {},
+      data: {}
+    };
+    options = $l.extend(options, defaults);
+
+    if (options.method.toUpperCase() === "GET") {
+      options.url += "?" + generateQueryString(options.data);
+    }
+
+    request.open(options.method, options.url, true);
+    request.onload = function (e) {
+      if (request.status == 200) {
+        options.success(request.response);
+      }
+      else {
+        options.error(request.response);
+      }
+    };
+
+    request.send(JSON.stringify(options.data));
   };
 
   // Document manipulation and traversal
@@ -168,7 +209,5 @@
       element.removeEventListener(eventName, fn);
     });
   };
-
-
 
 })(this);
