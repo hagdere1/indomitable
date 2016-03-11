@@ -93,9 +93,7 @@
       }
     };
 
-    console.log(options);
     request.send(JSON.stringify(options.data));
-
   };
 
   // Document manipulation and traversal
