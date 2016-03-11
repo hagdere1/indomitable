@@ -39,6 +39,22 @@
     return new DOMNodeCollection(elements);
   };
 
+  // Merge JS objects
+
+  $l.extend = function (base) {
+    var otherObjects = Array.prototype.slice.call(arguments, 1);
+
+    otherObjects.forEach(function (object) {
+      for (var prop in object) {
+        if (object.hasOwnProperty(prop)) {
+          base[prop] = object[prop];
+        }
+      }
+    });
+
+    return base;
+  };
+
   // Document manipulation and traversal
 
   DOMNodeCollection.prototype.html = function (string) {
