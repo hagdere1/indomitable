@@ -17,6 +17,8 @@
     return new DOMNodeCollection(elements);
   };
 
+  // Document manipulation and traversal
+
   DOMNodeCollection.prototype.html = function (string) {
     if (typeof string === "undefined") {
       return this.elements[0].innerHTML;
@@ -115,5 +117,20 @@
     return new DOMNodeCollection(parents);
   };
 
+  // Event handling
+
+  DOMNodeCollection.prototype.on = function (eventName, fn) {
+    this.elements.forEach(function (element) {
+      element.addEventListener(eventName, fn);
+    });
+  };
+
+  DOMNodeCollection.prototype.off = function (eventName, fn) {
+    this.elements.forEach(function (element) {
+      element.removeEventListener(eventName, fn);
+    });
+  };
+
+  
 
 })(this);

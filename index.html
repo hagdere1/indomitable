@@ -18,9 +18,19 @@
     <div>
 
     <script type="text/javascript">
-      $li = $l('li');
+      $ul = $l('ul');
 
-      $li.remove();
+      $ul.on('click', function () {
+        $l('li').remove();
+        $ul.off('click', function () {
+          $l('li').remove();
+        })
+        $ul.append('<li>');
+      });
+
+
+
+
 
     </script>
 
