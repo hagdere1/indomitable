@@ -19,7 +19,7 @@
   };
 
   var DOMNodeCollection = function (elements) {
-    this.elements = elements;
+    this.elements = Array.prototype.slice.call(elements);
   };
 
   var $l = root.$l = function (arg) {
@@ -28,18 +28,21 @@
     if (typeof arg === "function") {
       registerCallback(arg);
     }
-    else if (arg instanceof HTMLElement) {
-      elements = [arg];
+    else if (typeof arg === "object") {
+      if (arg instanceof HTMLElement) {
+        elements = [arg];
+        return new DOMNodeCollection(elements);
+      }
     }
-    else {
+    else if (typeof arg === "string") {
       var nodeList = document.querySelectorAll(arg);
-      elements = Array.prototype.slice.call(nodeList);
+      elements = Array.prototype.slice.call(nodeList, 0);
+      return new DOMNodeCollection(elements);
     }
 
-    return new DOMNodeCollection(elements);
   };
 
-  // Ajax requests
+  // AJAX requests
 
   $l.extend = function (base) {
     var otherObjects = Array.prototype.slice.call(arguments, 1);
