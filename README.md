@@ -1,4 +1,4 @@
-# jQuery Lite
+# inDOMitable
 
 ## Description
 
