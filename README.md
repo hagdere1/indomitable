@@ -2,7 +2,9 @@
 
 ## Description
 
-inDOMitable is a lightweight JavaScript library capable of DOM manipulation, event handling, and AJAX requests. It provides developers with a number of functions to conveniently build interactive web applications.
+inDOMitable is a JavaScript library capable of DOM manipulation, event
+handling, and AJAX requests. It provides developers with a number of
+functions to conveniently build interactive web applications.
 
 ### Setup
 
